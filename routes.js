@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const crudController = require('./controllers/crud');
 
-router.get('/tareas', crudController.getTareas); // Ruta para obtener tareas
-router.get('/tareas/:id', crudController.getTareaPorId);
-router.post('/create', crudController.createTarea); // Ruta para crear tarea
+router.get('/tareas', crudController.obtenerTareasList); // 
+router.get('/tareas/:id', crudController.obtenerTareaPorId);
+router.post('/create', crudController.crearTarea); 
 router.put('/tareas/:id/update', crudController.updateFechaModificacion);
+router.put('/tareas/:id/updateEliminar', crudController.eliminarFecha);
 
 module.exports = router;

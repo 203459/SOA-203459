@@ -1,6 +1,6 @@
 const pool = require('../database/db');
 
-const getTareas = async (req, res) => {
+const obtenerTareasList = async (req, res) => {
   try {
     const tareas = await pool.query('SELECT id, titulo FROM tareas where fecha_eliminacion is null');
     res.json(tareas.rows);
@@ -10,7 +10,7 @@ const getTareas = async (req, res) => {
   }
 };
 
-const getTareaPorId = async (req, res) => {
+const obtenerTareaPorId = async (req, res) => {
     const taskId = req.params.id;
   
     try {
@@ -25,7 +25,7 @@ const getTareaPorId = async (req, res) => {
     }
   };
 
-const createTarea = async (req, res) => {
+const crearTarea = async (req, res) => {
     const { titulo, descripcion } = req.body;
     const fechaCreacion = new Date().toISOString();
   
@@ -60,9 +60,30 @@ const createTarea = async (req, res) => {
     }
   };
 
+  
+  const eliminarFecha = async (req, res) => {
+    const taskId = req.params.id;
+    const fechaEliminacion = new Date().toISOString();
+    
+    const query = 'UPDATE tareas SET fecha_eliminacion = $1 WHERE id = $2 RETURNING *';
+    const values = [fechaEliminacion, taskId];
+  
+    try {
+      const eliminado = await pool.query(query, values);
+      if (eliminado.rows.length === 0) {
+        return res.status(404).json({ error: 'Tarea no encontrada' });
+      }
+      res.json(eliminado.rows[0]);
+    } catch (error) {
+      console.error('Error al actualizar tarea:', error);
+      res.status(500).json({ error: 'Error al actualizar tarea' });
+    }
+  };
+
 module.exports = {
-  getTareas,
-  createTarea,
-  getTareaPorId,
-  updateFechaModificacion
+  obtenerTareasList,
+  crearTarea,
+  obtenerTareaPorId,
+  updateFechaModificacion,
+  eliminarFecha
 };
