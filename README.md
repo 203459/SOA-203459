@@ -2,7 +2,6 @@
 
 # Gestor De Tareas
 203459 Shilon Gallegos Marcos Alejandro
-203459 Rios Mena Gustavo Vladimir
 
 
 # Tecnologias usadas
