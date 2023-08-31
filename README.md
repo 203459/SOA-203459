@@ -19,7 +19,7 @@ npm update
 # Ejecutar codigo
 node app.js
 
-# Puerto
- 3000
+# BG y puerto
+La Script de la base de datos esta dentro de la carpeta, el puerto es 3000
 
  
