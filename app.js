@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
-const routes = require('./routes');
 
 app.use(express.json());
-app.use('/api', routes);
+
+const tareasRoutes = require('./routes/tareasRoutes');
+app.use('/api', tareasRoutes);
+
+app.use((err, req, res, next) => {
+  console.error(err); 
+  res.status(500).json({ error: 'Ocurrió un error en el servidor.' });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
